@@ -1,8 +1,10 @@
-# React + Vite
+# Mock API를 Axios와 react-query로 사용하는 예제
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+commit을 통해 단계별로 정리해 놓았습니다.
 
-Currently, two official plugins are available:
+- axios 적용
+- react-query 적용
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Reference
+
+[MSW로 백엔드 API 모킹하기 by DaleSeo](https://www.daleseo.com/mock-service-worker/)
