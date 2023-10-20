@@ -1,29 +1,33 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { getData, postData } from "./apis/data";
+import { useMutation, useQuery } from "react-query";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const { isLoading, data } = useQuery("todos", getData, {
+    onSuccess: (data) => {
+      setTodos(data.data);
+    },
+  });
+
+  const mutation = useMutation(postData, {
+    onSuccess: (data) => {
+      setTodos((prev) => [...prev, data.config.data]);
+    },
+  });
 
   useEffect(() => {
-    setLoading(true);
-    getData().then((res) => {
-      setTodos(res.data);
-      setLoading(false);
-    });
+    if (data) {
+      setTodos(data.data);
+    }
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setLoading(true);
-
-    postData(todo).then((res) => {
-      console.log(res);
-      setTodos((prev) => [...prev, res.config.data]);
-      setLoading(false);
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutation.mutate({ todo });
   };
 
   return (
@@ -41,7 +45,7 @@ function App() {
           type="text"
           name="todo"
           placeholder="새로운 할일"
-          disabled={loading}
+          disabled={isLoading}
           value={todo}
           onChange={({ target: { value } }) => setTodo(value)}
         />
